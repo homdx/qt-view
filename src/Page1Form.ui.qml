@@ -12,6 +12,24 @@ Page {
     //       text: qsTr("You are on Page 1.")
     //       anchors.centerIn: parent
     //   }
+    Popup {
+        id: popup
+        x: 100
+        y: 100
+        width: 200
+        height: 300
+        modal: true
+        focus: true
+        //    anchors.fill: parent
+        TextArea {
+            id: popuptxt
+            textFormat: Text.RichText
+        }
+
+        //        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+        //                     | Popup.CloseOnPressOutside
+    }
+
     Text {
         id: downurl
         font.pixelSize: 12
@@ -108,8 +126,10 @@ Page {
                                 + "<a href=\"https://github.com/" + "fly" + "true" + "/dev-"
                                 + "apk1/releases/download/" + obj.versions[i].appver
                                 + "/dev-preview.apk" + "\">версию</a><br>\n"
+
                         button.text = 'Есть обновления'
                     }
+                    popuptxt.text = popuptxt.text + downurl.text
                 }
             }
             //print('count is ' + listView.count)
@@ -121,6 +141,7 @@ Page {
             //print(listView.preferredHighlightBegin)
             print("clicked1")
             print("clicked2")
+            popup.open()
         }
     }
 
