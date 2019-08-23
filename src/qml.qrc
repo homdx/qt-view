@@ -15,5 +15,7 @@
         <file>common/Tracer.qml</file>
         <file>common/YellowBox.qml</file>
         <file>main.cpp</file>
+        <file>qt-stackview_ru_RU.qm</file>
+        <file>qt-stackview_en_US.qm</file>
     </qresource>
 </RCC>

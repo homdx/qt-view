@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import Qt.labs.settings 1.0
+import io.qt.examples.langswitch 1.0
 
 Page {
     id: page
@@ -13,11 +14,32 @@ Page {
     Settings {
         property alias phone_num: phoneTxt.text
         property alias phone_pass: passTxt.text
+        property alias sel_language: langTxt.text
     }
 
     Component.onDestruction: {
         settings.state = page.state
-    }
+        }
+
+
+    LangSwitch  {
+         id: langswitch
+     }
+
+        Button { y:300; text: "English"; onClicked: {
+
+                langswitch.userName= "en_US";
+                langTxt.text = langswitch.userName;
+        }
+        }
+        Button { y:340; text: "Russian"; onClicked: {
+
+                langswitch.userName="ru_RU";
+                 langTxt.text = langswitch.userName;
+                    }
+}
+
+
     Label {
         text: qsTr("Настройки")
         anchors.centerIn: parent
@@ -34,6 +56,19 @@ Page {
         //        text: qsTr("12345678")
         inputMethodHints: Qt.ImhDigitsOnly
         placeholderText: qsTr("Номер тел.")
+        font.pixelSize: 18
+    }
+
+    TextField {
+        id: langTxt
+        x: 60
+        y: 234
+        width: 137
+        height: 34
+        //inputMask: qsTr("9999999999")
+        text: 'ru_RU'
+        //        text: qsTr("12345678")
+        //placeholderText: qsTr("Номер тел.")
         font.pixelSize: 18
     }
 

@@ -6,7 +6,7 @@ Page {
     height: 600
     clip: false
 
-    title: qsTr("Обновление")
+    title: qsTr("Update page")
 
     //    Label {
     //       text: qsTr("You are on Page 1.")
@@ -30,12 +30,13 @@ Page {
         //                     | Popup.CloseOnPressOutside
     }
 
+
     Text {
         id: downurl
         font.pixelSize: 12
         textFormat: Text.RichText
         font.italic: true
-        text: ""
+        text: Qt.locale().name.substring(0,2)
         // "ioi(<a href=\"" + link + "\">Link</a>)" ? text : "..."
         // anchors.centerIn: parent
         x: 20
@@ -61,13 +62,13 @@ Page {
         id: button
         x: 222
         y: 10
-        text: qsTr("Проверить")
+        text: qsTr("Check update")
     }
 
     Connections {
         target: button
         onClicked: {
-            textArea.text = ''
+            textArea.text = '.'
             var xmlhttp = new XMLHttpRequest()
             var url = "https://raw.githubusercontent.com/" + "fly" + "true"
                     + "/dev-" + "apk1/master/binapk/version.json"
@@ -127,7 +128,7 @@ Page {
                                 + "apk1/releases/download/" + obj.versions[i].appver
                                 + "/dev-preview.apk" + "\">версию</a><br>\n"
 
-                        button.text = 'Есть обновления'
+                        button.text = 'Update aviable'
                     }
                     popuptxt.text = popuptxt.text + downurl.text
                 }
@@ -151,7 +152,6 @@ Page {
         y: 250
         width: 600
         height: 200
-        text: qsTr("")
     }
 
     TextArea {
@@ -160,6 +160,5 @@ Page {
         y: 350
         width: 600
         height: 200
-        text: qsTr("")
     }
 }

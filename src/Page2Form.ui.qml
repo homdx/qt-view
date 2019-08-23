@@ -4,11 +4,15 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 
+
+
 Page {
     width: 400
     height: 600
 
     title: qsTr("Page 2")
+
+
 
     Loader {
         id: pageLoader
@@ -23,7 +27,6 @@ Page {
                              //statuslinetimer.stop()
                              //statuslinetimer.start()
                              pageLoader.source = "Page1Form.ui.qml"
-
                          }
     }
 
@@ -44,9 +47,11 @@ Page {
         target: button321
         onClicked: {
             // balbalance.text = ' Баланс 123'
+           // langswitch.userName = 'text'
             statusline.text = qsTr("loading")
             statuslinetimer.start()
             pageLoader.source = "https://raw.githubusercontent.com/homdx/qt-rssnews/master/src/example1.qml"
+            backend
 
 }
 }

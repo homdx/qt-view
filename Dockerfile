@@ -22,6 +22,7 @@ RUN export ANDROID_TARGET_SDK_VERSION=28 && \
     echo run && cp -vf ${profile}.buildapk ${profile} && \
     mkdir -pv android-build/libs/armeabi-v7a/ && \
     echo 'fix missing libc++_shared.so' && cp -vf /android-ndk-r17c/sources/cxx-stl/llvm-libc++/libs/armeabi-v7a/libc++_shared.so android-build/libs/armeabi-v7a/ && \
+    echo update translate files && lrelease ${profile} && \
     build-android-gradle-project ${profile} --debug && \
     echo copy result apk && \
     cp -vf android-build/build/outputs/apk/debug/android-build-debug.apk /app
