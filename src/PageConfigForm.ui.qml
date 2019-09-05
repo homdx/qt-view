@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 import Qt.labs.settings 1.0
 import io.qt.examples.langswitch 1.0
+import "common/config_js.js" as ConfigJs
 
 Page {
     id: page
@@ -17,28 +18,23 @@ Page {
         property alias sel_language: langTxt.text
     }
 
-    Component.onDestruction: {
-        settings.state = page.state
-        }
+    Component.onDestruction: settings.state = page.state
 
+    LangSwitch {
+        id: langswitch
+    }
 
-    LangSwitch  {
-         id: langswitch
-     }
+    Button {
+        y: 300
+        text: "English"
+        onClicked: ConfigJs.button_en_click
+    }
 
-        Button { y:300; text: "English"; onClicked: {
-
-                langswitch.userName= "en_US";
-                langTxt.text = langswitch.userName;
-        }
-        }
-        Button { y:340; text: "Russian"; onClicked: {
-
-                langswitch.userName="ru_RU";
-                 langTxt.text = langswitch.userName;
-                    }
-}
-
+    Button {
+        y: 340
+        text: "Russian"
+        onClicked: ConfigJs.button_ru_click
+    }
 
     Label {
         text: qsTr("Настройки")

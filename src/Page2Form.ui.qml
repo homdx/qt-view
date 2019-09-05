@@ -3,7 +3,7 @@
 // import QtQuick.Controls.Material 2.0
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-
+import "common/online_reload.js" as ReloadService
 
 
 Page {
@@ -16,19 +16,8 @@ Page {
 
     Loader {
         id: pageLoader
-        onStatusChanged: if (pageLoader.status == Loader.Ready) {
-                             console.log('Loaded from url')
-                            statusline.text = 'Download ok'
-                         } else
-                         {
-                             statusline.text = 'error download from url'
-                             console.log('error loading. local run')
-
-                             //statuslinetimer.stop()
-                             //statuslinetimer.start()
-                             pageLoader.source = "Page1Form.ui.qml"
-                         }
-    }
+        onStatusChanged: ReloadService.load
+}
 
     Label {
         text: qsTr("You are on Page 2.")

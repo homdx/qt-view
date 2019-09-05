@@ -17,5 +17,7 @@
         <file>main.cpp</file>
         <file>qt-stackview_ru_RU.qm</file>
         <file>qt-stackview_en_US.qm</file>
+        <file>common/online_reload.js</file>
+        <file>common/config_js.js</file>
     </qresource>
 </RCC>
