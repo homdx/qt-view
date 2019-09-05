@@ -40,7 +40,7 @@ Page {
             statusline.text = qsTr("loading")
             statuslinetimer.start()
             pageLoader.source = "https://raw.githubusercontent.com/homdx/qt-rssnews/master/src/example1.qml"
-            backend
+//            backend
 
 }
 }

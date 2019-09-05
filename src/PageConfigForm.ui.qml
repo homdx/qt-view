@@ -2,7 +2,6 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 import Qt.labs.settings 1.0
 import io.qt.examples.langswitch 1.0
-import "common/config_js.js" as ConfigJs
 
 Page {
     id: page
@@ -27,13 +26,13 @@ Page {
     Button {
         y: 300
         text: "English"
-        onClicked: ConfigJs.button_en_click
-    }
+        onClicked: langTxt.text=langswitch.userName= "en_US"
 
+    }
     Button {
         y: 340
         text: "Russian"
-        onClicked: ConfigJs.button_ru_click
+        onClicked: text = langTxt.text=langswitch.userName= "ru_RU"
     }
 
     Label {
