@@ -1,5 +1,6 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.5
+import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: window
@@ -7,9 +8,32 @@ ApplicationWindow {
     width: 400
     height: 480
     title: qsTr("Stack")
+    property alias balbalance : balbalance.text
+    property alias statusline : statusline.text
+    property alias statuslinetimer: timerid
+    Material.theme: Material.Dark
+    Material.accent: Material.Purple
+    //themeSwitch.checked
+                    //? Material.Dark : Material.Light
+
+
+    Timer {
+        id : timerid
+        interval: 5000; running: false; repeat: false
+        onTriggered: {
+            console.log('timer end');
+            statusline.text = '';
+
+    }
+}
+
+    footer: Text {
+        id: statusline
+    }
 
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
+
 
         ToolButton {
             id: toolButton
@@ -59,15 +83,16 @@ ApplicationWindow {
                 text: qsTr("Page 2")
                 width: parent.width
                 onClicked: {
+
                     stackView.push("Page2Form.ui.qml")
                     drawer.close()
                 }
             }
 
 
-
             ItemDelegate {
                 text: qsTr("Настройки")
+                id: config
                 width: parent.width
                 onClicked: {
                     stackView.push("PageConfigForm.ui.qml")
@@ -75,6 +100,14 @@ ApplicationWindow {
                 }
 
             }
+
+            ItemDelegate {
+                id: balbalance
+                x: config.x + 10
+
+                text: { balbalance.text = '\n\nБаланс ' }
+                }
+
         }
     }
 
@@ -86,3 +119,8 @@ ApplicationWindow {
 }
 
 
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/

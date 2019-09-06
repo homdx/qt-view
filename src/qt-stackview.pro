@@ -27,9 +27,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        langswitch.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
+
+TRANSLATIONS = \
+qt-stackview_en_US.ts \
+qt-stackview_ru_RU.ts
+
+OTHER_FILES += $${TRANSLATIONS}
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -55,3 +62,6 @@ contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
 }
+
+HEADERS += \
+    langswitch.h
