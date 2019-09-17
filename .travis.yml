@@ -2,7 +2,7 @@ language: qml
 services:
 - docker
 before_install:
-- docker pull homdx/qt-android-docker
+- docker pull homdx/qt-sources:001-slim
 - mkdir source
 - cd source
 - git clone https://github.com/homdx/qt-view
