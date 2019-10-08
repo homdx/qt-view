@@ -44,8 +44,8 @@ Page {
         id: phoneTxt
         x: 60
         y: 34
-        width: 137
-        height: 34
+        width: 145
+        height: 43
         //inputMask: qsTr("9999999999")
         text: ''
         //        text: qsTr("12345678")
@@ -57,9 +57,9 @@ Page {
     TextField {
         id: langTxt
         x: 60
-        y: 234
+        y: 216
         width: 137
-        height: 34
+        height: 52
         //inputMask: qsTr("9999999999")
         text: 'ru_RU'
         //        text: qsTr("12345678")
@@ -70,11 +70,11 @@ Page {
     Label {
         id: label
         x: 32
-        y: 39
+        y: 43
         color: "#3f4549"
         text: qsTr("+7")
         anchors.bottom: phoneTxt.top
-        anchors.bottomMargin: -28
+        anchors.bottomMargin: -32
         anchors.right: phoneTxt.left
         anchors.rightMargin: 0
         font.pointSize: 14
@@ -99,7 +99,7 @@ Page {
         x: 60
         y: 130
         width: 137
-        height: 28
+        height: 41
         text: qsTr("90512345678")
         inputMethodHints: Qt.ImhDigitsOnly
         font.pixelSize: 18

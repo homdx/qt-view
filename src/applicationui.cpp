@@ -130,17 +130,13 @@ void ApplicationUI::copyAssetsToAPPData() {
     // FileProvider uses Paths (see android/res/xml/filepaths.xml) stored at QStandardPaths::AppDataLocation
 
     // now create the working dir if not exists
-#if defined (Q_OS_IOS)
-    QString docLocationRoot = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).value(0);
-    qDebug() << "iOS: QStandardPaths::DocumentsLocation: " << docLocationRoot;
-#endif
-#if defined(Q_OS_ANDROID)
+//#if defined (Q_OS_IOS)
+//    QString docLocationRoot = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).value(0);
+//    qDebug() << "iOS: QStandardPaths::DocumentsLocation: " << docLocationRoot;
+//#endif
+//#if defined(Q_OS_ANDROID)
     QString docLocationRoot = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
     qDebug() << "Android: QStandardPaths::AppDataLocation: " << docLocationRoot;
-#endif
-//#if defined(Q_OS_LINUX)
-//    QString docLocationRoot = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
-//    qDebug() << "Linux: QStandardPaths::AppDataLocation: " << docLocationRoot;
 //#endif
     mDocumentsWorkPath = docLocationRoot.append("/share_example_x_files");
     if (!QDir(mDocumentsWorkPath).exists()) {

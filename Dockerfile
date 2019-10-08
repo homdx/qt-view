@@ -11,6 +11,7 @@ RUN cd /root && set -ex && curl -s -L -o android.tar.gz https://github.com/homdx
 
 ARG projname=qt-view
 ARG profile=qt-stackview.pro
+ARG builddate=09102019
 
 ADD . /app/qt-view/
 
@@ -25,7 +26,7 @@ export    ANDROID_NDK_TOOLCHAIN_PREFIX=arm-linux-androideabi c && \
 export    ANDROID_NDK_TOOLCHAIN_VERSION=4.9 c && \
 export DEBIAN_FRONTEND=noninteractive c && \
 export PATH=/usr/local/Qt-5.13.1/bin:$PATH && \
-    echo run && cp -vf ${profile}.buildapk ${profile} && \
+    echo run && echo cp -vf ${profile}.buildapk ${profile} && \
     lrelease ${profile} && \
     build-android-gradle-project ${profile} --debug && \
     echo copy result apk && \

@@ -19,6 +19,7 @@ Item {
         id: logEdit
         x: 20
         y: 222
+        color: "yellow"
         width: parent.width - 40
         height: 167
         wrapMode: TextEdit.WrapAnywhere
@@ -31,10 +32,11 @@ Item {
         //x: 114
         y: 140
         x: 60
+        color: "yellow"
 
         width: parent.width - 120
         height: 20
-        text: qsTr("/storage/emulated/0/download")
+        text: qsTr("/data/user/0/org.qtproject.qtview/files/share_example_x_files")
         font.pixelSize: 18
     }
 
