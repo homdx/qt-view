@@ -1,19 +1,36 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include <QQmlContext>
+
+
 #include <QtDebug>
 #include <QTranslator>
 
 #include <QtGui>
 #include "langswitch.h"
+#include "QuickDownload/src/quickdownload.h"
+#include "langswitch.h"
+
+#include "applicationui.hpp"
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    qputenv("QT_QUICK_CONTROLS_STYLE", "material");
     QGuiApplication app(argc, argv);
+    ApplicationUI appui;
 
     QQmlApplicationEngine engine;
+
+    // from QML we have access to ApplicationUI as myApp
+    QQmlContext* context = engine.rootContext();
+    context->setContextProperty("myApp", &appui);
+    // some more context properties
+    appui.addContextProperty(context);
+
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -21,6 +38,10 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     qDebug() << "before" << QLocale().name();
+
+#if defined(Q_OS_ANDROID)
+    QObject::connect(&app, SIGNAL(applicationStateChanged(Qt::ApplicationState)), &appui, SLOT(onApplicationStateChanged(Qt::ApplicationState)));
+#endif
 
     app.setOrganizationName("qt-stackview");
     app.setOrganizationDomain("qt-stackview.com");

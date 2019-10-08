@@ -7,6 +7,7 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 #if defined(Q_OS_ANDROID)
 #QMAKE_LINK += -nostdlib++
+android: QT += androidextras
 #elif defined(Q_OS_LINUX)
 QMAKE_LINK += ''
 #elif defined(Q_OS_WIN)
@@ -26,11 +27,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-        langswitch.cpp \
-        main.cpp
 
-RESOURCES += qml.qrc
+include(QuickDownload/quickdownload.pri)
+
+SOURCES += \
+        applicationui.cpp \
+        langswitch.cpp \
+        main.cpp \
+        shareutils.cpp
+
+RESOURCES += qml.qrc \
+            data_assets.qrc
+
+OTHER_FILES +=     android/src/org/qtproject/qtview/QShareActivity.java \
+    android/src/org/qtproject/utils/QSharePathResolver.java \
+     android/src/org/qtproject/utils/QShareUtils.java
+
 
 TRANSLATIONS = \
 qt-stackview_en_US.ts \
@@ -56,12 +68,18 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
     android/gradlew.bat \
-    android/res/values/libs.xml
+    android/res/xml/filepaths.xml
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
+
+    SOURCES += androidshareutils.cpp
+
+    HEADERS += androidshareutils.hpp
 }
 
 HEADERS += \
-    langswitch.h
+    applicationui.hpp \
+    langswitch.h \
+    shareutils.hpp

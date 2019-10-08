@@ -1,4 +1,4 @@
-import QtQuick 2.12
+ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 
@@ -100,6 +100,30 @@ ApplicationWindow {
                 }
 
             }
+
+            ItemDelegate {
+                text: qsTr("Downloader1")
+                id: downloader1
+                width: parent.width
+                onClicked: {
+                    stackView.push("Downloader1.ui.qml")
+                    drawer.close()
+                }
+
+            }
+
+
+            ItemDelegate {
+                text: qsTr("Share")
+                id: share1
+                width: parent.width
+                onClicked: {
+                    stackView.push("Share.ui.qml")
+                    drawer.close()
+                }
+
+            }
+
 
             ItemDelegate {
                 id: balbalance
