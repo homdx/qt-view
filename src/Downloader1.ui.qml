@@ -138,7 +138,8 @@ Item {
         id: fileDialog
         title: "Please choose a file"
         folder: {
-            if (texturl.text != '/storage/emulated/0/download') {
+        // /storage/emulated/0/download
+            if (texturl.text != '/data/user/0/org.qtproject.qtview/files/share_example_x_files') {
                 console.log('custom path =' + texturl.text)
                 fileDialog.folder = shortcuts.home
                 texturl.text = shortcuts.home
