@@ -1,7 +1,7 @@
 QT += quick
 CONFIG += c++11
 
-VERSION = 0.0.5
+VERSION = 0.0.7
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
