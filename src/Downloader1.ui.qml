@@ -48,7 +48,7 @@ Item {
         color: "white"
         width: 600
         height: 200
-        text: "textArea2\ntextArea2\ntextArea2\ntextArea2\n"
+        text: ""
     }
 
     TextArea {
@@ -57,13 +57,14 @@ Item {
         y: 350
         width: 600
         height: 200
-        text: "textArea\ntextArea\ntextArea\n"
+        visible: false
+        text: ""
     }
 
     TextInput {
         id: texturl
         //x: 114
-        y: parent.width-140
+        y: parent.height-140
         x: 20
         color: "yellow"
 
@@ -88,36 +89,44 @@ Item {
         }
     }
 
-    Button {
-        x: 100
-        y: 0
-        text: "D start"
-        onClicked: {
-            //download1.running = true
-            // download1.start
-            console.log('before cpp value is' + langswitch.getnewAppPath)
-            texturl.text = langswitch.getnewAppPath + "/dev-preview.apk"
-            langswitch.setAppPath = texturl.text
-            download2.destination = texturl.text
-            console.log('QML url download is =' + download2.destination)
-            download2.running = true
-            download2.start
-            //download3.running = true
-            // download3.start
-        }
-    }
+
 
     Button {
-        x: 200
-        y: 40
-        text: "Check path"
+        x: parent.width - checkupdatebtn.width - 20
+        id: checkupdatebtn
+        y: 80
+
+        text: "Check Update"
         onClicked: {
 
             console.log('before start checkupdate')
             CheckUpdate.myCheckupdate()
             console.log('after start checkupdate')
-            texturl.text = langswitch.getnewAppPath
+            // texturl.text = langswitch.getnewAppPath
             logEdit.text = download2.hashsum + '\n' + logEdit.text
+        }
+    }
+
+    Button {
+        x: checkupdatebtn.x - downloadButton.width - 20
+        y: 80
+        id: downloadButton
+        enabled: false
+        text: "D start"
+        onClicked: {
+            //download1.running = true
+            // download1.start
+            langswitch.setAppPath = texturl.text;
+            console.log('cppp setAppPath done');
+            console.log('before cpp value is' + langswitch.getnewAppPath);
+            texturl.text = langswitch.getnewAppPath + "/dev-preview.apk";
+            langswitch.setAppPath = texturl.text;
+            download2.destination = texturl.text;
+            console.log('QML url download is =' + download2.destination);
+            download2.running = true;
+            download2.start;
+            //download3.running = true
+            // download3.start
         }
     }
 
@@ -146,35 +155,35 @@ Item {
         }
     }
 
-    Button {
-        y: 40
-        text: "@apk"
-        onClicked: {
-            //logEdit.text= folderDialog.folder + '\n' + logEdit.text
-            //folder: texturl.text
-            //Qt.openUrlExternally(texturl.text);
-            //shareUtils.share("Qt","http://qt.io");
-            //shareUtils.share("Qt", texturl.text)
+//    Button {
+//        y: 40
+//        text: "@apk"
+//        onClicked: {
+//            //logEdit.text= folderDialog.folder + '\n' + logEdit.text
+//            //folder: texturl.text
+//            //Qt.openUrlExternally(texturl.text);
+//            //shareUtils.share("Qt","http://qt.io");
+//            //shareUtils.share("Qt", texturl.text)
 
 
-            if (Qt.platform.os === "android")
-            {
-            shareUtils.viewFile(texturl.text, "View File",
-                                "application/vnd.android.package-archive",
-                                request_VIEW_FILE_PDF, appWindow.useAltImpl)
-}
-            else
-            {
-                console.log('not android platform');
-             logEdit.text = 'Not android platform\n' + logEdit.text;
-            }
-            console.log('return from cpp ');
-            //download2.InstallApp=texturl.text.toString();
-            //langswitch.setAppPath = texturl.text;
-            //           console.log('return from cpp ' + langswitch.setAppPath(texturl.text));
-            logEdit.text = 'done\n' + logEdit.text
-        }
-    }
+//            if (Qt.platform.os === "android")
+//            {
+//            shareUtils.viewFile(texturl.text, "View File",
+//                                "application/vnd.android.package-archive",
+//                                request_VIEW_FILE_PDF, appWindow.useAltImpl)
+//}
+//            else
+//            {
+//                console.log('not android platform');
+//             logEdit.text = 'Not android platform\n' + logEdit.text;
+//            }
+//            console.log('return from cpp ');
+//            //download2.InstallApp=texturl.text.toString();
+//            //langswitch.setAppPath = texturl.text;
+//            //           console.log('return from cpp ' + langswitch.setAppPath(texturl.text));
+//            logEdit.text = 'done\n' + logEdit.text
+//        }
+//    }
 
     FolderDialog {
         id: folderDialog
@@ -213,18 +222,18 @@ Item {
         Component.onCompleted: visible = false
     }
 
-    Button {
-        x: 100
-        y: 40
-        text: "Set path"
-        onClicked: {
-            console.info('start setAppPath')
-            langswitch.setAppPath = texturl.text
-            // console.log('setAppPath done and returned is =' + fff)
-            //m_appPath = fff
-            console.info('done setAppPath')
-        }
-    }
+//    Button {
+//        x: 100
+//        y: 40
+//        text: "Set path"
+//        onClicked: {
+//            console.info('start setAppPath')
+//            langswitch.setAppPath = texturl.text
+//            // console.log('setAppPath done and returned is =' + fff)
+//            //m_appPath = fff
+//            console.info('done setAppPath')
+//        }
+//    }
 
     Button {
         y: 0

@@ -22,7 +22,7 @@ function myFunction(json) {
     var i = 0
     textArea2.text = ''
     downurl.text = ''
-    for (i; i < obj.versions.length; i++) {
+    for (i = obj.versions.length -1 ; i > -1; i--) {
         //ListModel.firstName=obj.employees[i].firstName
         //fruitModel.model.append({
         //                            "jsondata": obj.employees[i].firstName
@@ -49,7 +49,7 @@ function myFunction(json) {
 
         if (obj.versions[i].appver > textAreaVer.text) {
             textArea2.text = textArea2.text + obj.versions[i].appver
-                    + ' - ' + obj.versions[i].changesTxt + '\n'
+                    + ' - ' + obj.versions[i].changesTxt + '\n';
             console.log(obj.versions[i].appver + ' its upper version i=' + i)
 //            downurl.text = downurl.text + "Скачать " + obj.versions[i].appver + ' '
 //                    + "<a href=\"https://github.com/" + "fly" + "true" + "/dev-"
@@ -57,11 +57,13 @@ function myFunction(json) {
 //                    + "/dev-preview.apk" + "\">версию</a><br>\n"
             download2.url = "https://github.com/" + "fly" + "true" + "/dev-"
                                 + "apk1/releases/download/" + obj.versions[i].appver
-                                + "/dev-preview.apk"
+                                + "/dev-preview.apk";
+            downloadButton.enabled = true;
             //button.text = 'Update aviable'
         }
         //popuptxt.text = popuptxt.text + downurl.text
     }
+    if (textArea2.text == '') textArea2.text='Нет обновлений';
 }
 
 
