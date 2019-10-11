@@ -1,8 +1,9 @@
 function hash_set(hashtxt)
 {
-    console.log('globalForJs=' + globalHash);
+
     if (hashtxt == '' | hashtxt == null) return globalHash;
     globalHash=hashtxt
+    console.log('globalForJs=' + globalHash);
     return globalHash;
 }
 function myFunction(json) {
@@ -10,7 +11,7 @@ function myFunction(json) {
 
 
     //console.log(xmlhttp.responseText)
-    console.log(json)
+    //console.log(json)
     var obj = JSON.parse(json)
     console.log(obj.versions[0].appver)
 
@@ -20,9 +21,11 @@ function myFunction(json) {
     //                          "jsondata": obj.items[''].nome
     //                      })
     var i = 0
+    var lastver = '0.0.1';
     textArea2.text = ''
     downurl.text = ''
     for (i = obj.versions.length -1 ; i > -1; i--) {
+    //    for (i ; i <obj.versions.length ; i++) {
         //ListModel.firstName=obj.employees[i].firstName
         //fruitModel.model.append({
         //                            "jsondata": obj.employees[i].firstName
@@ -31,7 +34,7 @@ function myFunction(json) {
         console.log(obj.versions[i].appver)
         console.log(obj.versions[i].changesTxt)
         console.log(obj.versions[i].hashsum)
-        hash_set(obj.versions[i].hashsum)
+
         textArea.text = textArea.text + obj.versions[i].appver
                 + ' -- ' + obj.versions[i].changesTxt + '\n'
         if (textAreaVer.text == obj.versions[i].appver) {
@@ -48,16 +51,19 @@ function myFunction(json) {
         }
 
         if (obj.versions[i].appver > textAreaVer.text) {
+            if (obj.versions[i].appver > lastver ) {
+
+                lastver = obj.versions[i].appver
+                console.log ('upgradable to ' + lastver)
+                hash_set(obj.versions[i].hashsum)
+                download2.url = "https://github.com/" + "fly" + "true" + "/dev-"
+                                    + "apk1/releases/download/" + obj.versions[i].appver
+                                    + "/dev-preview.apk";
+            }
+
             textArea2.text = textArea2.text + obj.versions[i].appver
                     + ' - ' + obj.versions[i].changesTxt + '\n';
             console.log(obj.versions[i].appver + ' its upper version i=' + i)
-//            downurl.text = downurl.text + "Скачать " + obj.versions[i].appver + ' '
-//                    + "<a href=\"https://github.com/" + "fly" + "true" + "/dev-"
-//                    + "apk1/releases/download/" + obj.versions[i].appver
-//                    + "/dev-preview.apk" + "\">версию</a><br>\n"
-            download2.url = "https://github.com/" + "fly" + "true" + "/dev-"
-                                + "apk1/releases/download/" + obj.versions[i].appver
-                                + "/dev-preview.apk";
             downloadButton.enabled = true;
             //button.text = 'Update aviable'
         }
