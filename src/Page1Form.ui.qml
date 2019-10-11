@@ -104,6 +104,7 @@ Page {
                     console.log('i=' + i)
                     console.log(obj.versions[i].appver)
                     console.log(obj.versions[i].changesTxt)
+                    console.log(obj.versions[i].hashsum)
                     textArea.text = textArea.text + obj.versions[i].appver
                             + ' -- ' + obj.versions[i].changesTxt + '\n'
                     if (textAreaVer.text == obj.versions[i].appver) {

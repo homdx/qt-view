@@ -7,9 +7,12 @@ import io.qt.examples.langswitch 1.0
 import Qt.labs.platform 1.1
 import QtQuick.Dialogs 1.2
 
+import "common/check_update.js" as CheckUpdate
+
 Item {
 
     property int request_VIEW_FILE_PDF: 21
+    property string globalHash: '';
     id: appWindow
     LangSwitch {
         id: langswitch
@@ -18,7 +21,7 @@ Item {
     TextEdit {
         id: logEdit
         x: 20
-        y: 222
+        y: parent.width - 100
         color: "yellow"
         width: parent.width - 40
         height: 167
@@ -27,11 +30,41 @@ Item {
         font.pixelSize: 12
     }
 
+    TextArea {
+        id: textAreaVer
+        x: 20
+        y: 80
+        color: "#a40000"
+        text: qsTr(Qt.application.version)
+        //anchors.top: parent.top
+        anchors.topMargin: 80
+        font.pixelSize: 12
+    }
+
+    TextArea {
+        id: textArea2
+        x: 20
+        y: 120
+        color: "white"
+        width: 600
+        height: 200
+        text: "textArea2\ntextArea2\ntextArea2\ntextArea2\n"
+    }
+
+    TextArea {
+        id: textArea
+        x: 20
+        y: 350
+        width: 600
+        height: 200
+        text: "textArea\ntextArea\ntextArea\n"
+    }
+
     TextInput {
         id: texturl
         //x: 114
-        y: 140
-        x: 60
+        y: parent.width-140
+        x: 20
         color: "yellow"
 
         width: parent.width - 120
@@ -40,9 +73,24 @@ Item {
         font.pixelSize: 18
     }
 
+    Text {
+        id: downurl
+        font.pixelSize: 12
+        textFormat: Text.RichText
+        font.italic: true
+        text: Qt.locale().name.substring(0,2)
+        // "ioi(<a href=\"" + link + "\">Link</a>)" ? text : "..."
+        // anchors.centerIn: parent
+        x: 20
+        y: 180
+        onLinkActivated: {
+            Qt.openUrlExternally(link)
+        }
+    }
+
     Button {
         x: 100
-        y: 40
+        y: 0
         text: "D start"
         onClicked: {
             //download1.running = true
@@ -61,9 +109,13 @@ Item {
 
     Button {
         x: 200
-        y: 80
+        y: 40
         text: "Check path"
         onClicked: {
+
+            console.log('before start checkupdate')
+            CheckUpdate.myCheckupdate()
+            console.log('after start checkupdate')
             texturl.text = langswitch.getnewAppPath
             logEdit.text = download2.hashsum + '\n' + logEdit.text
         }
@@ -71,7 +123,7 @@ Item {
 
     Button {
         x: 200
-        y: 40
+        y: 0
         text: "Open"
         onClicked: {
             fileDialog.folder = texturl.text
@@ -84,7 +136,7 @@ Item {
 
     Button {
         x: 280
-        y: 40
+        y: 0
         text: " Get. "
         //onClicked: folderDialog.open()
         onClicked: {
@@ -95,7 +147,7 @@ Item {
     }
 
     Button {
-        y: 80
+        y: 40
         text: "@apk"
         onClicked: {
             //logEdit.text= folderDialog.folder + '\n' + logEdit.text
@@ -163,7 +215,7 @@ Item {
 
     Button {
         x: 100
-        y: 80
+        y: 40
         text: "Set path"
         onClicked: {
             console.info('start setAppPath')
@@ -175,7 +227,7 @@ Item {
     }
 
     Button {
-        y: 40
+        y: 0
         text: "Stor Req"
         onClicked: {
             console.info('permsreq requested before')
@@ -258,13 +310,27 @@ Item {
                             langswitch.getnewAppPath))
             console.log('read result with hashsumresult is = ' + hashsumresult)
             console.log('original summ is ' + download2.hashsum)
-            if (hashsumresult == '0b3af23ea69818b8666cc218b0285964b400172ad6db755cd7b6952baa80de5ecc26df971724131736675c13444262742070a45012c1008a2b434e2a7bcfece6') {
+            if (hashsumresult == CheckUpdate.hash_set()) {
                 console.log('checksum is ok')
                 logEdit.text = 'file checksum is [OK] :)))) \nAnd launch '
                         + langswitch.getnewAppPath + '\n' + logEdit.text
                 logEdit.text = 'And launch 2 ' + remove_qrc(
                             langswitch.getnewAppPath) + '\n' + logEdit.text
                 //Qt.openUrlExternally(remove_qrc(langswitch.getnewAppPath));
+
+                if (Qt.platform.os === "android")
+                {
+                shareUtils.viewFile(texturl.text, "View File",
+                                    "application/vnd.android.package-archive",
+                                    request_VIEW_FILE_PDF, appWindow.useAltImpl)
+    }
+                else
+                {
+                    console.log('not android platform');
+                 logEdit.text = 'Not android platform\n' + logEdit.text;
+                }
+
+
             } else {
                 console.log('checksum not ok')
                 logEdit.text = 'ERROR file checksum is not OK :(((( \n\n' + logEdit.text

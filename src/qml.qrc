@@ -20,5 +20,6 @@
         <file>common/online_reload.js</file>
         <file>Downloader1.ui.qml</file>
         <file>Share.ui.qml</file>
+        <file>common/check_update.js</file>
     </qresource>
 </RCC>
