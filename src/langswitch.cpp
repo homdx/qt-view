@@ -120,6 +120,31 @@ bool LangSwitch::requestPermissions()
     return true;
 }
 
+bool LangSwitch::copyFile2(const QString &sourceFile, const QString &destFile)
+{
+
+    if (sourceFile == nullptr || destFile == nullptr)
+    {
+        qDebug() << " one of parameter copy file is null ";
+        return false;
+    }
+    if (sourceFile == destFile) {
+     qDebug() << "source file = destination file" << sourceFile;
+     return false;
+    }
+
+    if (QFile::exists(destFile))
+    {
+        qDebug() << "dest file is exist - remove it = " << destFile;
+        QFile::remove(destFile);
+    }
+    qDebug() << "source file is " << sourceFile << " and destination is " << destFile;
+    return QFile::copy(sourceFile, destFile);
+
+
+
+}
+
 bool LangSwitch::copyFile ()
 {
     if (m_sourcefile == nullptr || m_destfile == nullptr)
@@ -152,7 +177,7 @@ return;
 void LangSwitch::setDestFile(const QString &destFile)
 {
 m_destfile = destFile;
-qDebug() << "set source file=" << m_destfile;
+qDebug() << "set destfile file=" << m_destfile;
 return;
 }
 

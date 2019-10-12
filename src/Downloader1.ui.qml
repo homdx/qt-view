@@ -18,6 +18,7 @@ Item {
         id: langswitch
     }
 
+
     TextEdit {
         id: logEdit
         x: 20
@@ -41,6 +42,8 @@ Item {
         anchors.topMargin: 80
         font.pixelSize: 12
     }
+
+
 
     Switch {
         id: typeupdate
@@ -191,16 +194,6 @@ Item {
             //logEdit.text= folderDialog.folder + '\n' + logEdit.text
             //folder: texturl.text
             var e = false;
-            console.log(langswitch.copyFile)
-            langswitch.setDestFile="/2/file.2";
-
-            console.log(langswitch.copyFile)
-            langswitch.setSourceFile="/1/file.1";
-            e= langswitch.copyFile;
-            if (e==true) { console.log('copy returned true') }
-            else
-            { console.log('copy returned false')
-            }
             if (typeupdate.checked == true) {
             logEdit.text = 'Start QT open1\n' + logEdit.text;
                 Qt.openUrlExternally("file://" + texturl.text);
@@ -397,8 +390,7 @@ Item {
                         var resultcopy = false;
                     var resultlaunch = '/data/user/0/org.qtproject.qtview/files/share_example_x_files/dev-preview.apk';
                     langswitch.setDestFile = resultlaunch;
-
-                        resultcopy = langswitch.copyFile
+                       resultcopy = langswitch.copyFile2(texturl.text,resultlaunch)
                         if (resultcopy == true) {
                             console.log ('qml file copy ok and launch from internal')
                             shareUtils.viewFile(resultlaunch, "View File",
