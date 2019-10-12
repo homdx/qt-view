@@ -32,13 +32,40 @@ Item {
 
     TextArea {
         id: textAreaVer
-        x: 20
+        x: 10
         y: 80
+        width: 40
         color: "#a40000"
         text: qsTr(Qt.application.version)
         //anchors.top: parent.top
         anchors.topMargin: 80
         font.pixelSize: 12
+    }
+
+    Switch {
+        id: typeupdate
+        x: textAreaVer.x + textAreaVer.width + 20
+        y: 80
+        checked: false
+        onClicked: {
+            if (typeupdate.checked == true)
+
+{
+                if (langswitch.requestPermissions == true) {
+                    // allowed local storage permissions
+                    texturl.text = '/storage/emulated/0/download'
+                    console.info('permsreq Allowed storage ok')
+                }
+                else
+                 {
+                    // no permissions to local storage
+                    typeupdate.checked = false
+                    console.info('qt permsreq Deny storage false')
+                 }
+            }
+
+            if (typeupdate.checked == false) texturl.text = '/data/user/0/org.qtproject.qtview/files/share_example_x_files'
+        }
     }
 
     TextArea {
@@ -122,6 +149,8 @@ Item {
             texturl.text = langswitch.getnewAppPath + "/dev-preview.apk";
             langswitch.setAppPath = texturl.text;
             download2.destination = texturl.text;
+
+            langswitch.setSourceFile =texturl.text;
             console.log('QML url download is =' + download2.destination);
             download2.running = true;
             download2.start;
@@ -155,35 +184,62 @@ Item {
         }
     }
 
-//    Button {
-//        y: 40
-//        text: "@apk"
-//        onClicked: {
-//            //logEdit.text= folderDialog.folder + '\n' + logEdit.text
-//            //folder: texturl.text
-//            //Qt.openUrlExternally(texturl.text);
-//            //shareUtils.share("Qt","http://qt.io");
-//            //shareUtils.share("Qt", texturl.text)
+    Button {
+        y: 40
+        text: "@apk"
+        onClicked: {
+            //logEdit.text= folderDialog.folder + '\n' + logEdit.text
+            //folder: texturl.text
+            var e = false;
+            console.log(langswitch.copyFile)
+            langswitch.setDestFile="/2/file.2";
+
+            console.log(langswitch.copyFile)
+            langswitch.setSourceFile="/1/file.1";
+            e= langswitch.copyFile;
+            if (e==true) { console.log('copy returned true') }
+            else
+            { console.log('copy returned false')
+            }
+            if (typeupdate.checked == true) {
+            logEdit.text = 'Start QT open1\n' + logEdit.text;
+                Qt.openUrlExternally("file://" + texturl.text);
+                logEdit.text = 'Start QT open2\n' + logEdit.text;
+            Qt.openUrlExternally("file://" + download2.remove_qrc(texturl.text));
+            logEdit.text = 'Start QT open3\n' + logEdit.text;
+            }
+            if (typeupdate.checked == false) {
+                logEdit.text = 'Start QT open4\n' + logEdit.text;
+            Qt.openUrlExternally(texturl.text);
+                logEdit.text = 'Start QT open5\n' + logEdit.text;
+            Qt.openUrlExternally(download2.remove_qrc(texturl.text));
+                logEdit.text = 'Start QT open6\n' + logEdit.text;
+            }
+
+            //shareUtils.share("Qt","http://qt.io");
+            //shareUtils.share("Qt", texturl.text)
 
 
-//            if (Qt.platform.os === "android")
-//            {
-//            shareUtils.viewFile(texturl.text, "View File",
-//                                "application/vnd.android.package-archive",
-//                                request_VIEW_FILE_PDF, appWindow.useAltImpl)
-//}
-//            else
-//            {
-//                console.log('not android platform');
-//             logEdit.text = 'Not android platform\n' + logEdit.text;
-//            }
-//            console.log('return from cpp ');
-//            //download2.InstallApp=texturl.text.toString();
-//            //langswitch.setAppPath = texturl.text;
-//            //           console.log('return from cpp ' + langswitch.setAppPath(texturl.text));
-//            logEdit.text = 'done\n' + logEdit.text
-//        }
-//    }
+            if (Qt.platform.os === "android")
+            {
+            logEdit.text = 'Start share metod\n' + logEdit.text
+                shareUtils.viewFile(texturl.text, "View File",
+                                "application/vnd.android.package-archive",
+                                request_VIEW_FILE_PDF, appWindow.useAltImpl)
+                logEdit.text = 'End share method\n' + logEdit.text
+}
+            else
+            {
+                console.log('not android platform');
+             logEdit.text = 'Not android platform\n' + logEdit.text;
+            }
+            console.log('return from cpp ');
+            //download2.InstallApp=texturl.text.toString();
+            //langswitch.setAppPath = texturl.text;
+            //           console.log('return from cpp ' + langswitch.setAppPath(texturl.text));
+            logEdit.text = 'done\n' + logEdit.text
+        }
+    }
 
     FolderDialog {
         id: folderDialog
@@ -323,7 +379,7 @@ Item {
                 console.log('checksum is ok')
                 logEdit.text = 'file checksum is [OK] :)))) \nAnd launch '
                         + langswitch.getnewAppPath + '\n' + logEdit.text
-                logEdit.text = 'And launch 2 ' + remove_qrc(
+                logEdit.text = 'And launch 2 ' + download2.remove_qrc(
                             langswitch.getnewAppPath) + '\n' + logEdit.text
                 //Qt.openUrlExternally(remove_qrc(langswitch.getnewAppPath));
 
@@ -331,7 +387,26 @@ Item {
                 {
                 shareUtils.viewFile(texturl.text, "View File",
                                     "application/vnd.android.package-archive",
-                                    request_VIEW_FILE_PDF, appWindow.useAltImpl)
+                                    request_VIEW_FILE_PDF, appWindow.useAltImpl);
+
+                    // choiced by switch parameter one or two type is selected
+                    if (typeupdate.checked == true) {
+                    var launchint=0;
+                        launchint = Qt.openUrlExternally('file://' + (texturl.text));
+                    console.log('res launch QT externaly = ' + launchint)
+                        var resultcopy = false;
+                    var resultlaunch = '/data/user/0/org.qtproject.qtview/files/share_example_x_files/dev-preview.apk';
+                    langswitch.setDestFile = resultlaunch;
+
+                        resultcopy = langswitch.copyFile
+                        if (resultcopy == true) {
+                            console.log ('qml file copy ok and launch from internal')
+                            shareUtils.viewFile(resultlaunch, "View File",
+                                                "application/vnd.android.package-archive",
+                                                request_VIEW_FILE_PDF, appWindow.useAltImpl);
+                        }
+                    }
+
     }
                 else
                 {

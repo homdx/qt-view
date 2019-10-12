@@ -96,7 +96,6 @@ bool LangSwitch::checkDirs()
 }
 
 
-
 QString LangSwitch::userName()
 {
     return m_userName;
@@ -119,6 +118,42 @@ bool LangSwitch::requestPermissions()
     #endif
     qDebug() << "requestPermissions - allowed permissions";
     return true;
+}
+
+bool LangSwitch::copyFile ()
+{
+    if (m_sourcefile == nullptr || m_destfile == nullptr)
+    {
+        qDebug() << " one of parameter copy file is null ";
+        return false;
+    }
+    if (m_sourcefile == m_destfile) {
+     qDebug() << "source file = destination file" << m_sourcefile;
+     return false;
+    }
+
+    if (QFile::exists(m_destfile))
+    {
+        qDebug() << "dest file is exist - remove it = " << m_destfile;
+        QFile::remove(m_destfile);
+    }
+    qDebug() << "source file is " << m_sourcefile << " and destination is " << m_destfile;
+    return QFile::copy(m_sourcefile, m_destfile);
+
+}
+
+void LangSwitch::setSourceFile(const QString &sourceFile)
+{
+m_sourcefile = sourceFile;
+qDebug() << "set source file=" << m_sourcefile;
+return;
+}
+
+void LangSwitch::setDestFile(const QString &destFile)
+{
+m_destfile = destFile;
+qDebug() << "set source file=" << m_destfile;
+return;
 }
 
 
